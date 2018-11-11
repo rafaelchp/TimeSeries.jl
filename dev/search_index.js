@@ -181,7 +181,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Array indexing",
     "title": "Date and DateTime",
     "category": "section",
-    "text": "Example Description Indexing value\n[Date(2000, 1, 3)] The row containing Jan 3, 2000 timestamp single Date\n[[Date(2000, 1, 3), Date(2000, 2, 4)]] The rows containing Jan 3 & Jan 4, 2000 multiple Dates\n[Date(2000, 1, 3):Day(1):Date(2000, 2, 4)] The rows between Jan 1, 2000 & Feb 1, 2000 range of DateExamples in REPL:using MarketData\nusing Datesohlc[Date(2000, 1, 3)]\nohlc[Date(2000, 1, 3):Day(1):Date(2000, 2, 4)]"
+    "text": "Example Description Indexing value\n[Date(2000, 1, 3)] The row containing Jan 3, 2000 timestamp single Date\n[[Date(2000, 1, 3), Date(2000, 2, 4)]] The rows containing Jan 3 & Feb 4, 2000 multiple Dates\n[Date(2000, 1, 3):Day(1):Date(2000, 2, 4)] The rows between Jan 3, 2000 & Feb 4, 2000 range of DateExamples in REPL:using MarketData\nusing Datesohlc[Date(2000, 1, 3)]\nohlc[Date(2000, 1, 3):Day(1):Date(2000, 2, 4)]"
 },
 
 {

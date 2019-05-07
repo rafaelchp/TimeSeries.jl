@@ -389,7 +389,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Apply methods",
     "title": "lead",
     "category": "section",
-    "text": "Leading values operates similarly to lagging values, but moves things in the other direction. Arbitrary time distances is also supported:using TimeSeries\nusing MarketData\nlead(cl[1:3])Since we are leading an object of length 3, only two values will be transformed because we have lost a day to the transformation.The cl object is 500 rows long so if we lead by 499 days, we should put the last observation in the object (which happens to be on Dec 31,into the first date\'s value slot:lead(cl, 499)"
+    "text": "Leading values operates similarly to lagging values, but moves things in the other direction. Arbitrary time distances is also supported:using TimeSeries\nusing MarketData\nlead(cl[1:3])Since we are leading an object of length 3, only two values will be transformed because we have lost a day to the transformation.The cl object is 500 rows long so if we lead by 499 days, we should put the last observation in the object (which happens to be on Dec 31, 2001) into the first date\'s value slot:lead(cl, 499)"
 },
 
 {

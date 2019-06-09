@@ -469,7 +469,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Combine methods",
     "title": "vcat",
     "category": "section",
-    "text": "The vcat method is used to concatenate time series: if you have two time series with the same columns, but two distinct periods of time, this function can merge them into a single object. Notably, it can be used to merge data that is split into multiple files. Its behaviour is quite different from merge, which does not consider that its arguments are actually the same time series.This concatenation is vertical (vcat) because it does not create columns, it extends existing ones (which are represented vertically).For example:using TimeSeries\na = TimeArray([Date(2015, 10, 01), Date(2015, 11, 01)], [15, 16])\nb = TimeArray([Date(2015, 12, 01)], [17])\n[a; b]"
+    "text": "The vcat method is used to concatenate time series: if you have two time series with the same columns, but two distinct periods of time, this function can merge them into a single object. Notably, it can be used to merge data that is split into multiple files. Its behaviour is quite different from merge, which does not consider that its arguments are actually the same time series.This concatenation is vertical (vcat) because it does not create columns, it extends existing ones (which are represented vertically).For example:using TimeSeries\na = TimeArray([Date(2015, 10, 01), Date(2015, 11, 01)], [15, 16])\nb = TimeArray([Date(2015, 12, 01)], [17])\nvcat(a, b)\n[a; b] # same as vcat(a,b)"
 },
 
 {

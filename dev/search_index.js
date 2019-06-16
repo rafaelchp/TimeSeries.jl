@@ -409,11 +409,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "apply/#TimeSeries.moving",
+    "page": "Apply methods",
+    "title": "TimeSeries.moving",
+    "category": "function",
+    "text": "moving(f, ta::TimeArray{T,1}, w::Integer; padding = false)\n\nApply user-defined function f to a 1D TimeArray with window size w.\n\nExample\n\nTo calculate the simple moving average of a time series:\n\nmoving(mean, ta, 10)\n\n\n\n\n\nmoving(f, ta::TimeArray{T,2}, w::Integer; padding = false, dims = 1, colnames = [...])\n\nExample\n\nIn case of dims = 2, the user-defined function f will get a 2D Array as input.\n\nmoving(ohlc, 10, dims = 2, colnames = [:A, ...]) do\n    # given that `ohlc` is a 500x4 `TimeArray`,\n    # size(A) is (10, 4)\n    ...\nend\n\n\n\n\n\n"
+},
+
+{
     "location": "apply/#moving-1",
     "page": "Apply methods",
     "title": "moving",
     "category": "section",
-    "text": "Function signature:moving(f, ta::TimeArray, window; padding=false)\nmoving(ta, window; padding=false) do x\n  ...\nendOften when working with time series, you want to take a sliding window view of the data and perform a calculation on it. The simplest example of this is the moving average. For a 10-period moving average, you take the first ten values, sum then and divide by 10 to get their average. Then you slide the window down one and to the same thing. This operation involves two important arguments: the function that you want to use on your window and the size of the window you want to apply that function over.In our moving average example, we would pass arguments this way:using TimeSeries\nusing MarketData\nusing Statistics\nmoving(mean, cl, 10)As mentioned previously, we lose the first nine observations to the consuming nature of this operation. They are not missing per se, they simply do not exist."
+    "text": "Often when working with time series, you want to take a sliding window view of the data and perform a calculation on it. The simplest example of this is the moving average. For a 10-period moving average, you take the first ten values, sum then and divide by 10 to get their average. Then you slide the window down one and to the same thing. This operation involves two important arguments: the function that you want to use on your window and the size of the window you want to apply that function over.In our moving average example, we would pass arguments this way:using TimeSeries\nusing MarketData\nusing Statistics\nmoving(mean, cl, 10)As mentioned previously, we lose the first nine observations to the consuming nature of this operation. They are not missing per se, they simply do not exist.moving"
 },
 
 {

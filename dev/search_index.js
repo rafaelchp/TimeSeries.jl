@@ -313,11 +313,27 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "modify/#rename-1",
+    "location": "modify/#TimeSeries.rename",
     "page": "Modify existing TimeArrays",
-    "title": "rename",
+    "title": "TimeSeries.rename",
+    "category": "function",
+    "text": "rename(ta::TimeArray, colnames::Vector{Symbol})\nrename(ta::TimeArray, colname::Symbol)\nrename(ta::TimeArray, orig => new, ...)\nrename(f::Base.Callable, ta, colnametyp)\n\nRename the columns of a TimeArray.\n\nSee also rename!.\n\nArguments\n\ncolnametyp is the input type for the function f. The valid value is Symbol or String.\n\n\n\n\n\n"
+},
+
+{
+    "location": "modify/#TimeSeries.rename!",
+    "page": "Modify existing TimeArrays",
+    "title": "TimeSeries.rename!",
+    "category": "function",
+    "text": "rename!(ta::TimeArray, colnames::Vector{Symbol})\nrename!(ta::TimeArray, colname::Symbol)\nrename!(ta::TimeArray, orig => new, ...)\nrename!(f::Base.Callable, ta, colnametyp)\n\nIn-place rename the columns of a TimeArray.\n\nSee also rename.\n\nArguments\n\ncolnametyp is the input type for the function f. The valid value is Symbol or String.\n\n\n\n\n\n"
+},
+
+{
+    "location": "modify/#rename-and-rename!-1",
+    "page": "Modify existing TimeArrays",
+    "title": "rename and rename!",
     "category": "section",
-    "text": "The rename method allows the column name(s) to be changed:using TimeSeries\nusing MarketData\nrename(cl, :Close′)\nrename(cl, [:Close′])\nrename(ohlc, [:Open′, :High′, :Low′, :Close′])\nrename(ohlc, :Open => :Open′)\nrename(ohlc, :Open => :Open′, :Close => :Close′)\nrename(ohlc, Dict(:Open => :Open′, :Close => :Close′)...)\nrename(Symbol ∘ uppercase ∘ string, ohlc)\nrename(uppercase, ohlc, String)"
+    "text": "The rename method allows the column name(s) to be changed. The rename! is used for in-place update.using TimeSeries\nusing MarketData\nrename(cl, :Close′) |> first\nrename(cl, [:Close′]) |> first\nrename(ohlc, [:Open′, :High′, :Low′, :Close′]) |> first\nrename(ohlc, :Open => :Open′) |> first\nrename(ohlc, :Open => :Open′, :Close => :Close′) |> first\nrename(ohlc, Dict(:Open => :Open′, :Close => :Close′)...) |> first\nrename(Symbol ∘ uppercase ∘ string, ohlc) |> first\nrename(uppercase, ohlc, String) |> firstrename\nrename!"
 },
 
 {

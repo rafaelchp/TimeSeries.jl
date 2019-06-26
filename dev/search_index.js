@@ -197,7 +197,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Array indexing",
     "title": "Symbol",
     "category": "section",
-    "text": "Example Description Indexing value\n[:Open] The column named :Open single symbol\n[:Open, :Close] The columns named :Open and :Close multiple symbolsExamples in REPL:using MarketData\nusing Datesohlc[:Open]\nohlc[:Open, :Close]"
+    "text": "Example Description Indexing value\n[:Open] The column named :Open single symbol\n[:Open, :Close] The columns named :Open and :Close multiple symbols\n[[:Open, :Close]] The columns named :Open and :Close multiple symbolsExamples in REPL:using MarketData\nusing Datesohlc[:Open]\nohlc[:Open, :Close]\ncols = [:Open, :Close]\nohlc[cols]"
 },
 
 {
@@ -205,7 +205,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Array indexing",
     "title": "Mixed approach",
     "category": "section",
-    "text": "Example Description Indexing value\n[:Open][1:3] :Open column & first 3 rows single symbol & integer range\n[:Open][Date(2000, 1, 3)] :Open column and Jan 3, 2000 single symbol & DateExamples in REPL:using MarketData\nusing Datesohlc[:Open][1:3]\nohlc[:Open][Date(2000, 1, 3)]"
+    "text": "Example Description Indexing value\n[1:3, :Open] :Open column & first 3 rows single symbol & integer range\n[:Open][Date(2000, 1, 3)] :Open column and Jan 3, 2000 single symbol & DateExamples in REPL:using MarketData\nusing Datesohlc[1:3, :Open]\nohlc[:Open][Date(2000, 1, 3)]"
 },
 
 {

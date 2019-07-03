@@ -21,7 +21,7 @@ var documenterSearchIndex = {"docs": [
     "page": "TimeSeries Overview",
     "title": "Contents",
     "category": "section",
-    "text": "Pages = [\n  \"getting_started.md\",\n  \"timearray.md\",\n  \"indexing.md\",\n  \"split.md\",\n  \"modify.md\",\n  \"operators.md\",\n  \"apply.md\",\n  \"combine.md\",\n  \"readwrite.md\",\n  \"dotfile.md\",\n  \"plotting.md\",\n]"
+    "text": "Pages = [\n  \"getting_started.md\",\n  \"timearray.md\",\n  \"indexing.md\",\n  \"split.md\",\n  \"modify.md\",\n  \"operators.md\",\n  \"apply.md\",\n  \"combine.md\",\n  \"readwrite.md\",\n  \"tables.md\",\n  \"dotfile.md\",\n  \"plotting.md\",\n]"
 },
 
 {
@@ -93,7 +93,7 @@ var documenterSearchIndex = {"docs": [
     "page": "The TimeArray time series type",
     "title": "TimeSeries.TimeArray",
     "category": "type",
-    "text": "TimeArray{T,N,D<:TimeType,A<:AbstractArray{T,N}} <: AbstractTimeSeries{T,N,D}\n\nConstructors\n\nTimeArray(timestamp, values[, colnames, meta = nothing])\nTimeArray(ta::TimeArray; timestamp, values, colnames, meta)\nTimeArray(data::NamedTuple, timestamp = :datetime, meta)\n\nThe second constructor will yields a new TimeArray with the new given fields. Note that the unchanged fields will be shared, there aren\'t any copy for the underlying arrays.\n\nThe third constructor builds a TimeArray from a NamedTuple.\n\nArguments\n\ntimestamp::AbstractVector{<:TimeType}: a vector of sorted timestamps, Each element in this vector should be unique.\nvalues::AbstractArray: a data vector or matrix. Its number of rows should match the length of timestamp.\ncolnames::Vector{Symbol}: the column names. Its length should match the column of values.\nmeta::Any: a user-defined metadata.\n\nExamples\n\ndata = (datetime = [DateTime(2018, 11, 21, 12, 0), DateTime(2018, 11, 21, 13, 0)],\n        col1 = [10.2, 11.2],\n        col2 = [20.2, 21.2],\n        col3 = [30.2, 31.2])\nta = TimeArray(data; timestamp = :datetime, meta = \"Example\")\n\n\n\n\n\n"
+    "text": "TimeArray{T,N,D<:TimeType,A<:AbstractArray{T,N}} <: AbstractTimeSeries{T,N,D}\n\nConstructors\n\nTimeArray(timestamp, values[, colnames, meta = nothing])\nTimeArray(ta::TimeArray; timestamp, values, colnames, meta)\nTimeArray(data::NamedTuple, timestamp = :datetime, meta)\nTimeArray(table; timestamp::Symbol)\n\nThe second constructor will yields a new TimeArray with the new given fields. Note that the unchanged fields will be shared, there aren\'t any copy for the underlying arrays.\n\nThe third constructor builds a TimeArray from a NamedTuple.\n\nArguments\n\ntimestamp::AbstractVector{<:TimeType}: a vector of sorted timestamps, Each element in this vector should be unique.\ntimestamp::Symbol: the column name of the time index from the source table. The constructor is used for the Tables.jl package integration.\nvalues::AbstractArray: a data vector or matrix. Its number of rows should match the length of timestamp.\ncolnames::Vector{Symbol}: the column names. Its length should match the column of values.\nmeta::Any: a user-defined metadata.\n\nExamples\n\ndata = (datetime = [DateTime(2018, 11, 21, 12, 0), DateTime(2018, 11, 21, 13, 0)],\n        col1 = [10.2, 11.2],\n        col2 = [20.2, 21.2],\n        col3 = [30.2, 31.2])\nta = TimeArray(data; timestamp = :datetime, meta = \"Example\")\n\n\n\n\n\n"
 },
 
 {
@@ -397,7 +397,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Apply methods",
     "title": "lag",
     "category": "section",
-    "text": "The lag method simply described is putting yesterday\'s value in today\'s timestamp. This is the most common use case, though there are many times the distance between timestamps is not 1 time unit. An arbitrary integer distance for lagging is supported, with the default equal to 1.The value of the cl object on Jan 3, 2000 is 111.94. On Jan 4, 2000 it is 102.50 and on Jan 5, 2000 it\'s 104.0:using TimeSeries\nusing MarketData\ncl[1:3]The lag method moves values up one day:lag(cl[1:3])You will notice that since there is no known value for lagging the first day, the observation on that timestamp is omitted. This behavior is common in time series. When observations are consumed in a transformation, the artifact dates are not preserved with a missingness value. To pad the returned TimeArray with NaN values instead, you can pass padding=true as a keyword argument:lag(cl[1:3], padding=true)"
+    "text": "The lag method simply described is putting yesterday\'s value in today\'s timestamp. This is the most common use case, though there are many times the distance between timestamps is not 1 time unit. An arbitrary integer distance for lagging is supported, with the default equal to 1.The value of the cl object on Jan 3, 2000 is 111.94. On Jan 4, 2000 it is 102.50 and on Jan 5, 2000 it\'s 104.0:using MarketData\ncl[1:3]The lag method moves values up one day:lag(cl[1:3])You will notice that since there is no known value for lagging the first day, the observation on that timestamp is omitted. This behavior is common in time series. When observations are consumed in a transformation, the artifact dates are not preserved with a missingness value. To pad the returned TimeArray with NaN values instead, you can pass padding=true as a keyword argument:lag(cl[1:3], padding=true)"
 },
 
 {
@@ -542,6 +542,54 @@ var documenterSearchIndex = {"docs": [
     "title": "writetimearray",
     "category": "section",
     "text": "The writetimearray method writes a TimeArray to the specified file as comma-separated values. For example:julia> writetimearray(cl[1:5], \"close.csv\")\n\nshell> cat close.csv\nTimestamp,Close\n2000-01-03,111.94\n2000-01-04,102.5\n2000-01-05,104.0\n2000-01-06,95.0\n2000-01-07,99.5"
+},
+
+{
+    "location": "tables/#",
+    "page": "Tables.jl Interface Integration",
+    "title": "Tables.jl Interface Integration",
+    "category": "page",
+    "text": ""
+},
+
+{
+    "location": "tables/#Tables.jl-Interface-Integration-1",
+    "page": "Tables.jl Interface Integration",
+    "title": "Tables.jl Interface Integration",
+    "category": "section",
+    "text": "Quoted from the home page of Tables.jl:The Table.jl package provides simple, yet powerful interface functions for working with all kinds tabular data through predictable access patterns.The integration provides handy constructor to convert a table between several types. The time index of a TimeArray is considered as a normal data column named timestamp.Here this doc shows some example usages of this integration. Converting table between DataFrames or CSV are quite common cases."
+},
+
+{
+    "location": "tables/#TimeArray-to-DataFrame-1",
+    "page": "Tables.jl Interface Integration",
+    "title": "TimeArray to DataFrame",
+    "category": "section",
+    "text": "using MarketData, DataFrames\ndf = DataFrame(ohlc)"
+},
+
+{
+    "location": "tables/#DataFrame-to-TimeArray-1",
+    "page": "Tables.jl Interface Integration",
+    "title": "DataFrame to TimeArray",
+    "category": "section",
+    "text": "In this case, user needs to point out the column of time index via the timestamp keyword argument.df′ = DataFrames.rename(df, :timestamp => :A);\ndf′ |> first\nTimeArray(df′, timestamp = :A)"
+},
+
+{
+    "location": "tables/#Save-a-TimeArray-via-CSV.jl-1",
+    "page": "Tables.jl Interface Integration",
+    "title": "Save a TimeArray via CSV.jl",
+    "category": "section",
+    "text": "using CSV\nCSV.write(filename, ta)"
+},
+
+{
+    "location": "tables/#Load-a-TimeArray-from-csv-file-via-CSV.jl-1",
+    "page": "Tables.jl Interface Integration",
+    "title": "Load a TimeArray from csv file via CSV.jl",
+    "category": "section",
+    "text": "using CSV\nTimeArray(CSV.File(filename), timestamp = :timestamp)"
 },
 
 {

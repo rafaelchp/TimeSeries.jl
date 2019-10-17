@@ -645,7 +645,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Plotting",
     "title": "plot",
     "category": "section",
-    "text": "The recipe allows TimeArray objects to be passed as input to plot. The recipe will plot each variable as an individual line, aligning all variables to the same y axis (here shown using PyPlot as a plotting backend).using Plots, MarketData, TimeSeries\npyplot()\nplot(MarketData.ohlc)(Image: image)More sophisticated plots can be created by using keyword attributes and subsets:plot(MarketData.ohlc[:Low], seriestype = :scatter, markersize = 3, color = :red, markeralpha = 0.4, grid = true)(Image: image)A complete list of all attributes and plotting possibilities can be found in the Plots documentation.Plotting candlestick:plot(TimeSeries.Candlestick(MarketData.ohlc))(Image: image)"
+    "text": "The recipe allows TimeArray objects to be passed as input to plot. The recipe will plot each variable as an individual line, aligning all variables to the same y axis (here shown using PyPlot as a plotting backend).using Plots, MarketData, TimeSeries\npyplot()\nplot(MarketData.ohlc)(Image: image)More sophisticated plots can be created by using keyword attributes and subsets:plot(MarketData.ohlc[:Low], seriestype = :scatter, markersize = 3, color = :red, markeralpha = 0.4, grid = true)(Image: image)A complete list of all attributes and plotting possibilities can be found in the Plots documentation.Plotting candlestick, the Candlestick constructor requires four columns exist in the input. They are open, high, low and close (case-insensitive).:plot(TimeSeries.Candlestick(MarketData.ohlc))(Image: image)"
 },
 
 ]}

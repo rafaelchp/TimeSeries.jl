@@ -93,7 +93,7 @@ var documenterSearchIndex = {"docs": [
     "page": "The TimeArray time series type",
     "title": "TimeSeries.TimeArray",
     "category": "type",
-    "text": "TimeArray{T,N,D<:TimeType,A<:AbstractArray{T,N}} <: AbstractTimeSeries{T,N,D}\n\nConstructors\n\nTimeArray(timestamp, values[, colnames, meta = nothing])\nTimeArray(ta::TimeArray; timestamp, values, colnames, meta)\nTimeArray(data::NamedTuple, timestamp = :datetime, meta)\nTimeArray(table; timestamp::Symbol, timeparser::Callable = identity)\n\nThe second constructor will yields a new TimeArray with the new given fields. Note that the unchanged fields will be shared, there aren\'t any copy for the underlying arrays.\n\nThe third constructor builds a TimeArray from a NamedTuple.\n\nArguments\n\ntimestamp::AbstractVector{<:TimeType}: a vector of sorted timestamps, Each element in this vector should be unique.\ntimestamp::Symbol: the column name of the time index from the source table. The constructor is used for the Tables.jl package integration.\nvalues::AbstractArray: a data vector or matrix. Its number of rows should match the length of timestamp.\ncolnames::Vector{Symbol}: the column names. Its length should match the column of values.\nmeta::Any: a user-defined metadata.\ntimeparser::Callable: a mapping function for converting the source time index. For instance, Dates.unix2datetime is a common case.\n\nExamples\n\ndata = (datetime = [DateTime(2018, 11, 21, 12, 0), DateTime(2018, 11, 21, 13, 0)],\n        col1 = [10.2, 11.2],\n        col2 = [20.2, 21.2],\n        col3 = [30.2, 31.2])\nta = TimeArray(data; timestamp = :datetime, meta = \"Example\")\n\n\n\n\n\n"
+    "text": "TimeArray{T,N,D<:TimeType,A<:AbstractArray{T,N}} <: AbstractTimeSeries{T,N,D}\n\nConstructors\n\nTimeArray(timestamp, values[, colnames, meta = nothing])\nTimeArray(ta::TimeArray; timestamp, values, colnames, meta)\nTimeArray(data::NamedTuple, timestamp = :datetime, meta)\nTimeArray(table; timestamp::Symbol, timeparser::Callable = identity)\n\nThe second constructor yields a new TimeArray with the new given fields. Note that the unchanged fields will be shared, there aren\'t any copy for the underlying arrays.\n\nThe third constructor builds a TimeArray from a NamedTuple.\n\nArguments\n\ntimestamp::AbstractVector{<:TimeType}: a vector of sorted timestamps,\ntimestamp::Symbol: the column name of the time index from the source table. The constructor is used for the Tables.jl package integration.\nvalues::AbstractArray: a data vector or matrix. Its number of rows should match the length of timestamp.\ncolnames::Vector{Symbol}: the column names. Its length should match the column of values.\nmeta::Any: a user-defined metadata.\ntimeparser::Callable: a mapping function for converting the source time index. For instance, Dates.unix2datetime is a common case.\n\nExamples\n\ndata = (datetime = [DateTime(2018, 11, 21, 12, 0), DateTime(2018, 11, 21, 13, 0)],\n        col1 = [10.2, 11.2],\n        col2 = [20.2, 21.2],\n        col3 = [30.2, 31.2])\nta = TimeArray(data; timestamp = :datetime, meta = \"Example\")\n\n\n\n\n\n"
 },
 
 {
@@ -497,11 +497,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "combine/#Base.vcat-Tuple{Vararg{TimeArray,N} where N}",
+    "page": "Combine methods",
+    "title": "Base.vcat",
+    "category": "method",
+    "text": "vcat(tas)\n\n\nConcatenate two TimeArray into single object.\n\nIf there are duplicated timestamps, we will keep order as the function input.\n\njulia> a = TimeArray([Date(2015, 10, 1), Date(2015, 10, 2), Date(2015, 10, 3)], [1, 2, 3]);\n\njulia> b = TimeArray([Date(2015, 10, 2), Date(2015, 10, 3)], [4, 5]);\n\njulia> [a; b]\n5×1 TimeArray{Int64,1,Date,Array{Int64,1}} 2015-10-01 to 2015-10-03\n│            │ A     │\n├────────────┼───────┤\n│ 2015-10-01 │ 1     │\n│ 2015-10-02 │ 2     │\n│ 2015-10-02 │ 4     │\n│ 2015-10-03 │ 3     │\n│ 2015-10-03 │ 5     │\n\n\n\n\n\n"
+},
+
+{
     "location": "combine/#vcat-1",
     "page": "Combine methods",
     "title": "vcat",
     "category": "section",
-    "text": "The vcat method is used to concatenate time series: if you have two time series with the same columns, but two distinct periods of time, this function can merge them into a single object. Notably, it can be used to merge data that is split into multiple files. Its behaviour is quite different from merge, which does not consider that its arguments are actually the same time series.This concatenation is vertical (vcat) because it does not create columns, it extends existing ones (which are represented vertically).For example:using TimeSeries\na = TimeArray([Date(2015, 10, 01), Date(2015, 11, 01)], [15, 16])\nb = TimeArray([Date(2015, 12, 01)], [17])\nvcat(a, b)\n[a; b] # same as vcat(a,b)"
+    "text": "The vcat method is used to concatenate time series: if you have two time series with the same columns, this function can merge them into a single object. Notably, it can be used to merge data that is split into multiple files. Its behaviour is quite different from merge, which does not consider that its arguments are actually the same time series.This concatenation is vertical (vcat) because it does not create columns, it extends existing ones (which are represented vertically).vcat(tas::Vararg{TimeArray,N} where N)"
 },
 
 {

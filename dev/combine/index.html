@@ -38,7 +38,7 @@ julia&gt; meta(CatApple)
 47
 
 julia&gt; meta(merge(AppleCat, CatApple))</code></pre><section class="docstring"><div class="docstring-header"><a class="docstring-binding" id="Base.merge" href="#Base.merge"><code>Base.merge</code></a> — <span class="docstring-category">Function</span>.</div><div><div><pre><code class="language-none">merge(ta1::TimeArray{T}, ta2::TimeArray{T}, [tas::TimeArray{T}...];
-      method = :inner, colnames = [...], padvalue = NaN)</code></pre><p>Merge several <code>TimeArray</code>s along with the time index.</p><p><strong>Argument</strong></p><ul><li><code>method::Symbol</code>: <code>:inner</code>, <code>:outer</code>, <code>:left</code> or <code>:right</code>.</li></ul></div></div><a class="source-link" target="_blank" href="https://github.com/JuliaStats/TimeSeries.jl/blob/e66f65760eaf277846228a013b350ae9f4038153/src/combine.jl#L13-L22">source</a></section><h2><a class="nav-anchor" id="collapse-1" href="#collapse-1"><code>collapse</code></a></h2><p>The <code>collapse</code> method allows for compressing data into a larger time frame. For example, converting daily data into monthly data. When compressing dates, something rational has to be done with the values that lived in the more granular time frame. To define what happens, a function call is made. In our example, we want to compress the daily <code>cl</code> closing prices from daily to monthly. It makes sense for us to take the <code>last</code> value known and have that represented with the corresponding timestamp. A non-exhaustive list of valid time methods is presented below.</p><table><tr><th>Dates method</th><th>Time length</th></tr><tr><td><code>day</code></td><td>daily</td></tr><tr><td><code>week</code></td><td>weekly</td></tr><tr><td><code>month</code></td><td>monthly</td></tr><tr><td><code>year</code></td><td>yearly</td></tr></table><p>Showing this code in REPL:</p><pre><code class="language-julia-repl">julia&gt; using TimeSeries
+      method = :inner, colnames = [...], padvalue = NaN)</code></pre><p>Merge several <code>TimeArray</code>s along with the time index.</p><p><strong>Argument</strong></p><ul><li><code>method::Symbol</code>: <code>:inner</code>, <code>:outer</code>, <code>:left</code> or <code>:right</code>.</li></ul></div></div><a class="source-link" target="_blank" href="https://github.com/JuliaStats/TimeSeries.jl/blob/ed0cd207d379fe7959a00e5772034fcaec4b5eb5/src/combine.jl#L13-L22">source</a></section><h2><a class="nav-anchor" id="collapse-1" href="#collapse-1"><code>collapse</code></a></h2><p>The <code>collapse</code> method allows for compressing data into a larger time frame. For example, converting daily data into monthly data. When compressing dates, something rational has to be done with the values that lived in the more granular time frame. To define what happens, a function call is made. In our example, we want to compress the daily <code>cl</code> closing prices from daily to monthly. It makes sense for us to take the <code>last</code> value known and have that represented with the corresponding timestamp. A non-exhaustive list of valid time methods is presented below.</p><table><tr><th>Dates method</th><th>Time length</th></tr><tr><td><code>day</code></td><td>daily</td></tr><tr><td><code>week</code></td><td>weekly</td></tr><tr><td><code>month</code></td><td>monthly</td></tr><tr><td><code>year</code></td><td>yearly</td></tr></table><p>Showing this code in REPL:</p><pre><code class="language-julia-repl">julia&gt; using TimeSeries
 
 julia&gt; using MarketData
 
@@ -86,36 +86,20 @@ julia&gt; collapse(cl, month, last, mean)
 │ 2001-09-28 │ 16.602   │
 │ 2001-10-31 │ 17.3222  │
 │ 2001-11-30 │ 19.649   │
-│ 2001-12-31 │ 21.695   │</code></pre><h2><a class="nav-anchor" id="vcat-1" href="#vcat-1"><code>vcat</code></a></h2><p>The <code>vcat</code> method is used to concatenate time series: if you have two time series with the same columns, but two distinct periods of time, this function can merge them into a single object. Notably, it can be used to merge data that is split into multiple files. Its behaviour is quite different from <code>merge</code>, which does not consider that its arguments are actually the <em>same</em> time series.</p><p>This concatenation is <em>vertical</em> (<code>vcat</code>) because it does not create columns, it extends existing ones (which are represented vertically).</p><p>For example:</p><pre><code class="language-julia-repl">julia&gt; using TimeSeries
+│ 2001-12-31 │ 21.695   │</code></pre><h2><a class="nav-anchor" id="vcat-1" href="#vcat-1"><code>vcat</code></a></h2><p>The <code>vcat</code> method is used to concatenate time series: if you have two time series with the same columns, this function can merge them into a single object. Notably, it can be used to merge data that is split into multiple files. Its behaviour is quite different from <code>merge</code>, which does not consider that its arguments are actually the <em>same</em> time series.</p><p>This concatenation is <em>vertical</em> (<code>vcat</code>) because it does not create columns, it extends existing ones (which are represented vertically).</p><section class="docstring"><div class="docstring-header"><a class="docstring-binding" id="Base.vcat-Tuple{Vararg{TimeArray,N} where N}" href="#Base.vcat-Tuple{Vararg{TimeArray,N} where N}"><code>Base.vcat</code></a> — <span class="docstring-category">Method</span>.</div><div><div><pre><code class="language-julia">vcat(tas)
+</code></pre><p>Concatenate two <span>$TimeArray$</span> into single object.</p><p>If there are duplicated timestamps, we will keep order as the function input.</p><pre><code class="language-julia-repl">julia&gt; a = TimeArray([Date(2015, 10, 1), Date(2015, 10, 2), Date(2015, 10, 3)], [1, 2, 3]);
 
-julia&gt; a = TimeArray([Date(2015, 10, 01), Date(2015, 11, 01)], [15, 16])
-2×1 TimeArray{Int64,1,Date,Array{Int64,1}} 2015-10-01 to 2015-11-01
+julia&gt; b = TimeArray([Date(2015, 10, 2), Date(2015, 10, 3)], [4, 5]);
+
+julia&gt; [a; b]
+5×1 TimeArray{Int64,1,Date,Array{Int64,1}} 2015-10-01 to 2015-10-03
 │            │ A     │
 ├────────────┼───────┤
-│ 2015-10-01 │ 15    │
-│ 2015-11-01 │ 16    │
-
-julia&gt; b = TimeArray([Date(2015, 12, 01)], [17])
-1×1 TimeArray{Int64,1,Date,Array{Int64,1}} 2015-12-01 to 2015-12-01
-│            │ A     │
-├────────────┼───────┤
-│ 2015-12-01 │ 17    │
-
-julia&gt; vcat(a, b)
-3×1 TimeArray{Int64,1,Date,Array{Int64,1}} 2015-10-01 to 2015-12-01
-│            │ A     │
-├────────────┼───────┤
-│ 2015-10-01 │ 15    │
-│ 2015-11-01 │ 16    │
-│ 2015-12-01 │ 17    │
-
-julia&gt; [a; b] # same as vcat(a,b)
-3×1 TimeArray{Int64,1,Date,Array{Int64,1}} 2015-10-01 to 2015-12-01
-│            │ A     │
-├────────────┼───────┤
-│ 2015-10-01 │ 15    │
-│ 2015-11-01 │ 16    │
-│ 2015-12-01 │ 17    │</code></pre><h2><a class="nav-anchor" id="map-1" href="#map-1"><code>map</code></a></h2><p>This function allows complete transformation of the data within the time series, with alteration on both the time stamps and the associated values. It works exactly like <code>Base.map</code>: the first argument is a binary function (the time stamp and the values) that returns two values, respectively the new time stamp and the new vector of values. It does not perform any kind of compression like <code>collapse</code>, but rather transformations.</p><p>The simplest example is to postpone all time stamps in the given time series, here by one year:</p><pre><code class="language-julia-repl">julia&gt; using TimeSeries
+│ 2015-10-01 │ 1     │
+│ 2015-10-02 │ 2     │
+│ 2015-10-02 │ 4     │
+│ 2015-10-03 │ 3     │
+│ 2015-10-03 │ 5     │</code></pre></div></div><a class="source-link" target="_blank" href="https://github.com/JuliaStats/TimeSeries.jl/blob/ed0cd207d379fe7959a00e5772034fcaec4b5eb5/src/combine.jl#L142-L164">source</a></section><h2><a class="nav-anchor" id="map-1" href="#map-1"><code>map</code></a></h2><p>This function allows complete transformation of the data within the time series, with alteration on both the time stamps and the associated values. It works exactly like <code>Base.map</code>: the first argument is a binary function (the time stamp and the values) that returns two values, respectively the new time stamp and the new vector of values. It does not perform any kind of compression like <code>collapse</code>, but rather transformations.</p><p>The simplest example is to postpone all time stamps in the given time series, here by one year:</p><pre><code class="language-julia-repl">julia&gt; using TimeSeries
 
 julia&gt; using Dates
 
